@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 2 — Selectors Practice</title>
+  <style>
+    * {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: red;
+    }
+
+    .highlight {
+      background-color: yellow;
+    }
+
+    #special {
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>This is the First H1</h1>
+  <h1 class="highlight">This is the Second H1 (Highlighted)</h1>
+
+  <p>This is the first paragraph.</p>
+  <p id="special">This is the second paragraph with ID "special".</p>
+  <p class="highlight">This is the third paragraph (Highlighted).</p>
+
+  <div>This is the first div.</div>
+  <div class="highlight">This is the second div (Highlighted).</div>
+</body>
+</html>

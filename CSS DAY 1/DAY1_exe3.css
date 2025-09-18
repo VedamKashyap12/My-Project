@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 3 — Text, Colors & Units</title>
+  <style>
+    .p1 {
+      font-size: 16px;
+      color: darkgreen;
+    }
+
+    .p2 {
+      font-size: 1.5em;
+      color: rgba(0, 0, 255, 0.5);
+    }
+
+    .p3 {
+      font-size: 2rem;
+      text-align: center;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <p class="p1">This is paragraph 1 with dark green text and 16px font size.</p>
+  <p class="p2">This is paragraph 2 with semi-transparent blue text and 1.5em font size.</p>
+  <p class="p3">This is paragraph 3 with 2rem font size, centered, and line height of 1.8.</p>
+</body>
+</html>
