@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Exercise 1 – Responsive Analytics Dashboard</title>
+  <style>
+    /* =========================
+       STUDENT TODO (CSS ONLY)
+       =========================
+       1) Define CSS variables in :root for colors, spacing, radius, z-index.
+       2) Implement Grid page template: header, sidebar, content (grid-template-areas).
+       3) Sidebar fixed width on ≥1024px; collapsible behavior at smaller widths.
+       4) Content cards: Flexbox for internal layout; use gap (no inner margins).
+       5) Responsive card grid: auto-fit, minmax(220px, 1fr), 1rem gap.
+       6) clamp() for h1/h2 sizes; rem for spacing; %/vw/vh appropriately.
+       7) Sticky sub-header in content; layered above cards with z-index token.
+       8) Focus-visible styles; prefers-reduced-motion to disable transitions.
+       9) Theme override scope (.theme-dark) tweaking surface/text tokens.
+      10) Ensure no horizontal scroll at 360px; test breakpoints at 768px/1024px.
+    */
+    /* =========================
+       VARIABLES
+    ========================= */
+    :root {
+      --color-bg: #f9fafb;
+      --color-surface: #ffffff;
+      --color-text: #111827;
+      --color-text-muted: #6b7280;
+      --color-accent: #2563eb;
+
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2rem;
+
+      --radius: 0.5rem;
+      --z-header: 100;
+      --z-subheader: 90;
+    }
+
+    /* Dark theme override */
+    .theme-dark {
+      --color-bg: #1f2937;
+      --color-surface: #374151;
+      --color-text: #f3f4f6;
+      --color-text-muted: #9ca3af;
+      --color-accent: #3b82f6;
+    }
+
+    /* =========================
+       GLOBAL STYLES
+    ========================= */
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 2vw, 2.25rem);
+    }
+
+    h2 {
+      font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+
+    /* =========================
+       APP LAYOUT
+    ========================= */
+    .app {
+      display: grid;
+      grid-template-areas:
+        "header"
+        "sidebar"
+        "content";
+      grid-template-rows: auto auto 1fr;
+      min-height: 100vh;
+    }
+
+    .app__header {
+      grid-area: header;
+      background: var(--color-surface);
+      padding: var(--space-sm);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: var(--z-header);
+    }
+
+    .app__sidebar {
+      grid-area: sidebar;
+      background: var(--color-surface);
+      padding: var(--space-md) var(--space-sm);
+      border-right: 1px solid #e5e7eb;
+    }
+
+    .app__content {
+      grid-area: content;
+      padding: var(--space-md);
+    }
+
+    /* Large screens: fixed sidebar */
+    @media (min-width: 1024px) {
+      .app {
+        grid-template-areas:
+          "header header"
+          "sidebar content";
+        grid-template-columns: 240px 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      .app__sidebar {
+        position: sticky;
+        top: var(--space-lg);
+        height: calc(100vh - var(--space-lg));
+      }
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .nav__item {
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius);
+      color: var(--color-text-muted);
+      transition: background 0.3s;
+    }
+
+    .nav__item:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    /* =========================
+       SUBHEADER
+    ========================= */
+    .subheader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-sm) 0;
+      position: sticky;
+      top: 0;
+      background: var(--color-bg);
+      z-index: var(--z-subheader);
+    }
+
+    .filters {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .btn {
+      padding: var(--space-xs) var(--space-sm);
+      border: none;
+      border-radius: var(--radius);
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    /* =========================
+       CARDS
+    ========================= */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .card__title {
+      margin: 0;
+    }
+
+    .card__meta {
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+    }
+
+    .card__body {
+      flex: 1;
+    }
+
+    .card__actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* =========================
+       RESPONSIVE TEST
+    ========================= */
+    @media (max-width: 360px) {
+      body {
+        overflow-x: hidden;
+      }
+    }
+    
+  </style>
+</head>
+<body class="theme-default">
+  <div class="app">
+    <header class="app__header" role="banner">
+      <h1 class="brand">Acme Analytics</h1>
+    </header>
+
+    <aside class="app__sidebar" role="navigation" aria-label="Primary">
+      <nav class="nav">
+        <a href="#" class="nav__item">Overview</a>
+        <a href="#" class="nav__item">Reports</a>
+        <a href="#" class="nav__item">Teams</a>
+        <a href="#" class="nav__item">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="app__content" role="main">
+      <div class="subheader" role="region" aria-label="Subheader">
+        <h2 class="subheader__title">KPI Overview</h2>
+        <div class="filters">
+          <button class="btn">Today</button>
+          <button class="btn">7d</button>
+          <button class="btn">30d</button>
+        </div>
+      </div>
+
+      <section class="cards">
+        <article class="card">
+          <h3 class="card__title">Revenue</h3>
+          <div class="card__meta">vs last week</div>
+          <div class="card__body">[chart placeholder]</div>
+          <div class="card__actions">
+            <button class="btn">Details</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Active Users</h3>
+          <div class="card__meta">last 24h</div>
+          <div class="card__body">[chart placeholder]</div>
+          <div class="card__actions">
+            <button class="btn">Details</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Conversion</h3>
+          <div class="card__meta">month to date</div>
+          <div class="card__body">[chart placeholder]</div>
+          <div class="card__actions">
+            <button class="btn">Details</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">NPS</h3>
+          <div class="card__meta">quarter</div>
+          <div class="card__body">[chart placeholder]</div>
+          <div class="card__actions">
+            <button class="btn">Details</button>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

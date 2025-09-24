@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Exercise 2 – Media Showcase</title>
+  <style>
+    /* =========================
+       STUDENT TODO (CSS ONLY)
+       =========================
+       1) Hero: gradient background + mask vignette; clamp() for heading text.
+       2) Sticky top nav (position: sticky) with proper z-index.
+       3) Responsive images:
+          - <picture> in hero (art direction).
+          - Gallery images: object-fit: cover; use aspect-ratio to avoid CLS.
+          - srcset + sizes for various widths.
+       4) Gallery grid: auto-fit/minmax tiles with consistent gaps.
+       5) Add grayscale filter on tiles; remove on hover/focus with transitions.
+       6) Overlay label via ::after; absolute-positioned within tile.
+       7) Clip-path polygon on one featured tile.
+       8) CSS variables for accent colors and spacing tokens.
+       9) Accessibility: focus-visible outlines; contrast ≥ 4.5:1 for text.
+      10) Motion prefs: @media (prefers-reduced-motion: reduce) to disable transitions.
+    */
+    /* =========================
+       VARIABLES
+    ========================= */
+   :root {
+  --accent: #2563eb;
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --radius: 0.75rem;
+  --z-topnav: 100;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-sm);
+  font-weight: 700;
+}
+
+p {
+  max-width: 60ch;
+  color: var(--text-muted);
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* Top nav */
+.topnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--surface);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-topnav);
+}
+
+.topnav__links {
+  display: flex;
+  gap: var(--space-md);
+  font-weight: 500;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff;
+  min-height: 70vh;
+  overflow: hidden;
+}
+
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(37,99,235,0.65), rgba(0,0,0,0.7));
+  z-index: 1;
+}
+
+.hero__text {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-lg);
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.tile__img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+  display: block;
+}
+
+.tile:hover .tile__img,
+.tile:focus-within .tile__img {
+  filter: grayscale(0%);
+}
+
+.tile__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-sm);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  border-radius: 0 0 var(--radius) var(--radius);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.tile--featured .tile__img {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+
+  </style>
+</head>
+<body>
+  <header class="topnav" role="navigation" aria-label="Top Navigation">
+    <a href="#" class="logo">MediaLab</a>
+    <nav class="topnav__links">
+      <a href="#">Home</a>
+      <a href="#">Gallery</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="region" aria-label="Hero">
+    <div class="hero__media">
+      <picture>
+        <source type="image/avif" srcset="https://picsum.photos/seed/hero/1600/900.avif" media="(min-width: 1024px)">
+        <source type="image/webp" srcset="https://picsum.photos/seed/hero/1200/675.webp"  media="(min-width: 768px)">
+        <img class="hero__img" src="https://picsum.photos/seed/hero/800/600.jpg" alt="Dramatic landscape at sunset">
+      </picture>
+    </div>
+    <div class="hero__text">
+      <h1>Experience Visual Stories</h1>
+      <p>High‑impact imagery, adaptive loading, and accessible motion.</p>
+    </div>
+  </section>
+
+  <main class="gallery" role="main">
+    <figure class="tile">
+      <img src="https://picsum.photos/id/1016/800/600" alt="River valley" class="tile__img">
+      <figcaption class="tile__caption">Valley</figcaption>
+    </figure>
+    <figure class="tile tile--featured">
+      <img src="https://picsum.photos/id/1035/800/600" alt="Forest canopy" class="tile__img">
+      <figcaption class="tile__caption">Canopy</figcaption>
+    </figure>
+    <figure class="tile">
+      <img src="https://picsum.photos/id/1025/800/600" alt="Country road" class="tile__img">
+      <figcaption class="tile__caption">Road</figcaption>
+    </figure>
+    <figure class="tile">
+      <img src="https://picsum.photos/id/1043/800/600" alt="Coastline" class="tile__img">
+      <figcaption class="tile__caption">Coast</figcaption>
+    </figure>
+    <figure class="tile">
+      <img src="https://picsum.photos/id/1039/800/600" alt="Mountain lake" class="tile__img">
+      <figcaption class="tile__caption">Lake</figcaption>
+    </figure>
+  </main>
+</body>
+</html>
