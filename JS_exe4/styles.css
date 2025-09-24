@@ -1,0 +1,98 @@
+
+/* Minimal, modern UI for student exercises */
+:root {
+  --bg: #0f172a;          /* slate-900 */
+  --card: #111827;        /* gray-900 */
+  --text: #e5e7eb;        /* gray-200 */
+  --muted: #9ca3af;       /* gray-400 */
+  --accent: #22d3ee;      /* cyan-400 */
+  --accent-contrast: #00151a;
+  --btn-hover: #06b6d4;
+  --ring: rgba(34, 211, 238, 0.3);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 800px at 100% -20%, #1f2937 10%, var(--bg) 60%);
+  color: var(--text);
+}
+
+.container {
+  max-width: 720px;
+  margin: 8vh auto;
+  padding: 32px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+}
+
+h1, h2, h3 {
+  margin: 0 0 14px;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 0.3px;
+}
+
+p.desc {
+  color: var(--muted);
+  margin: 8px 0 22px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+button, .btn {
+  appearance: none;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--accent), var(--btn-hover));
+  color: var(--accent-contrast);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .15s ease, filter .15s ease;
+  box-shadow: 0 8px 22px var(--ring);
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+button:active, .btn:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+.card {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+}
+
+.footer {
+  margin-top: 22px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Accent variants by data-theme */
+:root[data-theme="atm"]    { --accent:#22d3ee; --btn-hover:#06b6d4; }
+:root[data-theme="grading"]{ --accent:#a78bfa; --btn-hover:#8b5cf6; }
+:root[data-theme="tickets"]{ --accent:#34d399; --btn-hover:#10b981; }
+:root[data-theme="cart"]   { --accent:#f472b6; --btn-hover:#ec4899; }
