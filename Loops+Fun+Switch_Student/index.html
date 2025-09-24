@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loops + Functions + Switch Trainer — Student</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>🧪 Loops + Functions + Switch Trainer — Student</h1>
+    <p class="subtitle">Tiny playground to practice <b>loops</b>, <b>functions</b>, and <b>switch</b> (Fill the TODOs in app.js).</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>1) Number List</h2>
+      <p>Enter comma-separated integers (e.g., <code>5, 2, 7, 2, 8</code>)</p>
+      <div class="row">
+        <input type="text" id="nums" placeholder="e.g., 5, 2, 7, 2, 8" />
+        <button id="btn-load" class="btn">Load</button>
+      </div>
+      <p class="muted">Loaded: <span id="loaded">[]</span></p>
+    </section>
+
+    <section class="card">
+      <h2>2) Run Operation (uses switch)</h2>
+      <div class="row">
+        <select id="op">
+          <option value="sum">Sum</option>
+          <option value="product">Product</option>
+          <option value="max">Max</option>
+          <option value="count-even">Count Even</option>
+        </select>
+        <button id="btn-run" class="btn">Run</button>
+      </div>
+      <p class="muted">Result: <span id="result">—</span></p>
+    </section>
+
+    <section class="card">
+      <h2>3) Even/Odd Summary (uses loops + function)</h2>
+      <button id="btn-summary" class="btn ghost">Compute Summary</button>
+      <div class="grid-2">
+        <div class="kpi"><div class="kpi-label">Even Count</div><div class="kpi-value" id="even-count">0</div></div>
+        <div class="kpi"><div class="kpi-label">Odd Count</div><div class="kpi-value" id="odd-count">0</div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Focus: <b>loops</b> (for/while), <b>functions</b> (clear names + returns), <b>switch</b> (select logic).</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

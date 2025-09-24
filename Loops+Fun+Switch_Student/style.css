@@ -1,0 +1,21 @@
+/* Minimal pleasant light theme */
+:root{
+  --bg:#f7f9fc; --card:#fff; --text:#1b2845; --border:#e8eef7;
+  --accent:#4f7cff; --muted:#64748b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+.app-header{padding:2rem 1rem 1rem;text-align:center}
+.subtitle{color:var(--muted)}
+.container{max-width:880px;margin:0 auto;padding:1rem;display:grid;gap:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem;box-shadow:0 6px 18px rgba(17,24,39,.06)}
+.row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+input,select{padding:.6rem .8rem;border:1px solid var(--border);border-radius:12px;background:#fff}
+.btn{border:none;padding:.6rem .9rem;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+.btn.ghost{background:#eef3ff;color:#1b2a55}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.kpi{border:1px solid var(--border);border-radius:14px;padding:1rem;background:linear-gradient(180deg,#fff,#f8fbff)}
+.kpi-label{color:#5a6f95;font-size:.85rem}
+.kpi-value{font-size:1.4rem;font-weight:800}
+.app-footer{text-align:center;opacity:.8;padding:1rem 0 2rem}
+.muted{color:var(--muted)}
